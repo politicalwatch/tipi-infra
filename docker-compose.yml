@@ -81,6 +81,7 @@ services:
       - ${FRONTEND_PATH}/.env
     volumes:
       - ${FRONTEND_PATH}:/app
+      - /app/node_modules
     command: yarn serve
     ports:
       - ${FRONTEND_PORT}:8080
