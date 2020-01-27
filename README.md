@@ -28,7 +28,9 @@ command:
 docker inspect tipi-log | grep IPAddress
 ```
 
-## Exec tipi-engine cron
+## Exec tipi-engine
+
+### Cron
 
 You can modify the cron task for tipi-engine in tipi-infra/engine-cron
 
@@ -38,6 +40,11 @@ You need to activate crontab task:
 docker exec -ti tipi-engine crontab /etc/cron.d/engine-cron
 ```
 
+### One time
+
+```
+docker exec -ti tipi-engine python base.py
+```
 
 ## Load data in mongodb
 
