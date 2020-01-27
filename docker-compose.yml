@@ -1,0 +1,121 @@
+version: "3.7"
+services:
+
+  redis:
+    image: redis:6.0-rc
+    container_name: ${PROJECT_NAME}-redis
+    ports:
+      - 6379
+    labels:
+      logio: "yes"
+
+  mongo:
+    image: mongo:3.4-xenial
+    container_name: ${PROJECT_NAME}-mongo
+    restart: unless-stopped
+    ports:
+      - 27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: tipi
+      MONGO_INITDB_ROOT_PASSWORD: tipi
+      MONGO_INITDB_DATABASE: tipidb
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - tipi-vol-mongo:/data/db
+    labels:
+      logio: "yes"
+
+  mongo-express:
+    image: mongo-express:0.49
+    container_name: ${PROJECT_NAME}-mongo-express
+    restart: unless-stopped
+    ports:
+      - ${MONGO_EXPRESS_PORT}:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: tipi
+      ME_CONFIG_MONGODB_ADMINPASSWORD: tipi
+    labels:
+      logio: "yes"
+
+  tipi-engine:
+    build:
+      context: ${ENGINE_PATH}
+      dockerfile: Dockerfile-dev
+    container_name: ${PROJECT_NAME}-engine
+    restart: unless-stopped
+    env_file:
+      - ${ENGINE_PATH}/.env
+    volumes:
+      - ./engine-cron:/etc/cron.d/engine-cron
+      - ${ENGINE_PATH}:/app
+    depends_on:
+      - mongo
+    labels:
+      logio: "yes"
+
+  tipi-backend:
+    build:
+      context: ${BACKEND_PATH}
+      dockerfile: Dockerfile-dev
+    container_name: ${PROJECT_NAME}-backend
+    restart: unless-stopped
+    env_file:
+      - ${BACKEND_PATH}/.env
+    volumes:
+      - ${BACKEND_PATH}:/app
+    ports:
+      - ${BACKEND_PORT}:5000
+    depends_on:
+      - mongo
+    command: gunicorn --bind 0.0.0.0:5000 --access-logfile - tipi_backend.wsgi:app --reload
+    labels:
+      logio: "yes"
+
+  tipi-frontend:
+    build:
+      context: ${FRONTEND_PATH}
+      dockerfile: Dockerfile-dev
+    container_name: ${PROJECT_NAME}-frontend
+    restart: unless-stopped
+    env_file:
+      - ${FRONTEND_PATH}/.env
+    volumes:
+      - ${FRONTEND_PATH}:/app
+    command: yarn serve
+    ports:
+      - ${FRONTEND_PORT}:8080
+    depends_on:
+      - tipi-backend
+    labels:
+      logio: "yes"
+
+  tipi-alerts:
+    build:
+      context: ${ALERTS_PATH}
+      dockerfile: Dockerfile-dev
+    container_name: ${PROJECT_NAME}-alerts
+    restart: unless-stopped
+    env_file:
+      - ${ALERTS_PATH}/.env
+    volumes:
+      - ${ALERTS_PATH}:/app
+    depends_on:
+      - redis
+      - mongo
+    labels:
+      logio: "yes"
+
+  log:
+    container_name: ${PROJECT_NAME}-log
+    image: geniousphp/logio
+    privileged: true
+    restart: unless-stopped
+    environment:
+      PORT: 80
+      DOCKER_SOCKET: "/var/run/docker.sock"
+      SHOW_LOG_BY_LABEL: "logio"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  tipi-vol-mongo:
