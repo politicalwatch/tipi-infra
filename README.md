@@ -1,9 +1,50 @@
 # Deploy in develop environment
 
+## Clone repositories
+
+* tipi-engine:
+
+```
+git clone https://github.com/politicalwatch/tipi-engine.git
+```
+
+* tipi-backend:
+
+```
+git clone https://github.com/politicalwatch/tipi-backend.git
+```
+
+* tipi-alerts:
+
+```
+git clone https://github.com/politicalwatch/tipi-alerts.git
+```
+
+* tipi-frontend:
+
+```
+git clone https://github.com/politicalwatch/tipi-frontend.git
+```
+
+or
+
+```
+git clone https://github.com/politicalwatch/parlamento2030.es.git
+```
+
+* tipi-infra:
+
+```
+git clone https://github.com/politicalwatch/tipi-infra.git
+```
+
 ## Edit environment vars
 
 You need modify environment variables in tipi-infra/.env for select your
-project paths and your prefered ports
+project paths and your prefered ports.
+
+You can modify specific environment variables of each project. Exists a .env
+file inside of each project.
 
 When you finish, you can exec the complete project:
 
