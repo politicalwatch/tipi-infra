@@ -95,7 +95,7 @@ Inside tipi-infra there is an example data for work, you can load it if you want
 # Copy tipidb folder with data in tipi-mongo docker
 docker cp tipidb tipi-mongo:/tmp
 # Restore data in DB: tipi is the user and pass by default and tipidb the db name
-docker exec -ti tipi-mongo mongorestore -u tipi -p tipi -d tipidb /tmp/tipidb/
+docker exec -ti tipi-mongo mongoimport -u tipi -p tipi -d tipidb -c topics /tmp/tipidb/topics.json
 ```
 
 
