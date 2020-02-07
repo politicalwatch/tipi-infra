@@ -62,11 +62,19 @@ Your project are running by default at:
 
 ## Check logs about your services
 
-Logio is used by applications logs and you can found the url executing the next
+There is tow ways to check logs:
+
+1. Logio is used by applications logs and you can found the url executing the next
 command:
 
 ```
 docker inspect tipi-log | grep IPAddress
+```
+
+2. Check each container with docker logs command:
+
+```
+docker logs -f CONTAINER_NAME
 ```
 
 ## Exec tipi-engine
