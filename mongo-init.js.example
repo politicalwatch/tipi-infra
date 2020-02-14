@@ -1,0 +1,12 @@
+db.createUser(
+  {
+    user: "tipi2",  // CHANGE USER
+    pwd: "tipi2",  // CHANGE PASSWORD
+    roles: [
+      {
+        role: "readWrite",
+        db: "tipidb2"  // CHANGE DB_NAME
+      }
+    ]
+  }
+);
