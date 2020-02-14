@@ -110,28 +110,33 @@ docker exec -ti tipi-mongo mongoimport -u tipi -p tipi -d tipidb -c topics /tmp/
 ```
 
 
-# Deploy in production environment (IN PROGRESS)
+# Deploy in production environment
 
 ## Building docker images:
 
-NOTE: Examples are put using the master branch, but you can change if you have an
-staging server.
+Currently, images are built automatically when there is a change in the
+repository, but you can build the image manually.
 
-cd tipi-engine
-docker build -t tipi-engine:master .
+For example, this are steps for creating and upload one image of backend:
 
+1. Enter in repository and build docker image
+
+```
 cd tipi-backend
-docker build -t tipi-backend:master .
+docker build -t politicalwatch/tipi-backend:latest .
+```
 
-cd tipi-frontend
-docker build -t tipi-frontend:master .
+2. Login to dockerhub
 
-cd tipi-alerts
-docker build -t tipi-alerts:master .
+```
+docker login docker.io --username=xxx --password=xxx
+```
 
-When you had generated all images, you should upload to dockerhub:
+3. Push image to dockerhub
 
-- docker push tipi-engine:master
+```
+docker push politicalwatch/tipi-backend:latest
+```
 
 ## Configure tipi-infra
 
