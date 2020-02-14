@@ -24,7 +24,7 @@ services:
       - tipi-mongo:/data/db
 
   tipi-engine:
-    image: ${PROJECT_NAME}-engine:${BRANCH}
+    image: politicalwatch/tipi-engine:${BRANCH}
     container_name: ${PROJECT_NAME}-engine
     restart: unless-stopped
     env_file:
@@ -36,7 +36,7 @@ services:
       - mongo
 
   tipi-backend:
-    image: ${PROJECT_NAME}-backend:${BRANCH}
+    image: politicalwatch/tipi-backend:${BRANCH}
     container_name: ${PROJECT_NAME}-backend
     restart: unless-stopped
     env_file:
@@ -48,7 +48,7 @@ services:
       - mongo
 
   tipi-frontend:
-    image: ${PROJECT_NAME}-frontend:${BRANCH}
+    image: politicalwatch/${FRONTEND}:${BRANCH}
     container_name: ${PROJECT_NAME}-frontend
     restart: unless-stopped
     env_file:
@@ -59,7 +59,7 @@ services:
       - mongo
 
   tipi-alerts:
-    image: ${PROJECT_NAME}-alerts:${BRANCH}
+    image: politicalwatch/tipi-alerts:${BRANCH}
     container_name: ${PROJECT_NAME}-alerts
     restart: unless-stopped
     env_file:

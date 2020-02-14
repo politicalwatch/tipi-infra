@@ -1,4 +1,5 @@
 PROJECT_NAME=tipi
+FRONTEND=parlamento2030
 BRANCH=latest
 MONGO_USER=tipi
 MONGO_PASSWORD=tipi
