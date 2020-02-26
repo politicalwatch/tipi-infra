@@ -14,10 +14,10 @@ git clone https://github.com/politicalwatch/tipi-engine.git
 git clone https://github.com/politicalwatch/tipi-backend.git
 ```
 
-* tipi-alerts:
+* tipi-tasks:
 
 ```
-git clone https://github.com/politicalwatch/tipi-alerts.git
+git clone https://github.com/politicalwatch/tipi-tasks.git
 ```
 
 * tipi-frontend:
@@ -147,7 +147,7 @@ docker push politicalwatch/tipi-backend:latest
 cp mongo-init.js.example mongo-init.js
 cp .env.pro .env
 cp .env.mongo.example .env.mongo
-cp .env.alerts.example .env.alerts
+cp .env.tasks.example .env.tasks
 cp .env.backend.example .env.backend
 cp .env.engine.example .env.engine
 cp .env.frontend.example .env.frontend

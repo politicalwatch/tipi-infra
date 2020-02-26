@@ -90,16 +90,16 @@ services:
     labels:
       logio: "yes"
 
-  tipi-alerts:
+  tipi-tasks:
     build:
-      context: ${ALERTS_PATH}
+      context: ${TASKS_PATH}
       dockerfile: Dockerfile-dev
-    container_name: ${PROJECT_NAME}-alerts
+    container_name: ${PROJECT_NAME}-tasks
     restart: unless-stopped
     env_file:
-      - ${ALERTS_PATH}/.env
+      - ${TASKS_PATH}/.env
     volumes:
-      - ${ALERTS_PATH}:/app
+      - ${TASKS_PATH}:/app
     depends_on:
       - redis
       - mongo

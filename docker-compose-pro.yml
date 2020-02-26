@@ -58,13 +58,13 @@ services:
     depends_on:
       - mongo
 
-  tipi-alerts:
-    image: politicalwatch/tipi-alerts:${BRANCH}
-    container_name: ${PROJECT_NAME}-alerts
+  tipi-tasks:
+    image: politicalwatch/tipi-tasks:${BRANCH}
+    container_name: ${PROJECT_NAME}-tasks
     restart: unless-stopped
     env_file:
       - .env.mongo
-      - .env.alerts
+      - .env.tasks
     depends_on:
       - redis
       - mongo
