@@ -171,3 +171,13 @@ pass the file, for example:
 docker-compose -f docker-compose-pro.yml down
 docker-compose -f docker-compose-pro.yml logs -f
 ```
+
+5. Update images:
+
+```
+docker-compose -f docker-compose-pro.yml pull
+
+or
+
+docker-compose -f docker-compose-pro.yml pull image-name
+```
