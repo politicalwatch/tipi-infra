@@ -160,6 +160,7 @@ cp .env.frontend.example .env.frontend
 4. Execute the project:
 
 ```
+docker-compose -f docker-compose-pro.yml pull
 docker-compose -f docker-compose-pro.yml up -d
 ```
 
