@@ -57,6 +57,8 @@ services:
       - ${FRONTEND_PORT}:80
     depends_on:
       - mongo
+    volumes:
+      - ./nginx-default.conf:/etc/nginx/conf.d/default.conf
 
   tipi-tasks:
     image: politicalwatch/tipi-tasks:${BRANCH}
