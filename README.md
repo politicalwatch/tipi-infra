@@ -126,6 +126,9 @@ cd tipi-backend
 docker build -t politicalwatch/tipi-backend:latest .
 ```
 
+IMPORTANTE NOTICE: you should change .env.production in case of you are building
+tipi-frontend or parlamento2030
+
 2. Login to dockerhub
 
 ```
