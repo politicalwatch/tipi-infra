@@ -1,5 +1,5 @@
 .env
-.env.alerts
+.env.tasks
 .env.backend
 .env.engine
 .env.mongo
