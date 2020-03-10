@@ -167,6 +167,15 @@ docker-compose -f docker-compose-pro.yml up -d
 NOTE: for whatever command that you want to use with docker-compose, you need to
 pass the file, for example:
 
+IMPORTANT NOTICE: If you have a proxy, you need to add the command for gunicorn
+in docker-compose-pro.yml, inside tipi-backend:
+
+```
+    command: gunicorn --proxy-allow-from "xx.xx.xx.xx" --access-logfile - tipi_backend.wsgi:app
+```
+
+At last, up environment:
+
 ```
 docker-compose -f docker-compose-pro.yml down
 docker-compose -f docker-compose-pro.yml logs -f
