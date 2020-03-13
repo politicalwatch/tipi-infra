@@ -193,3 +193,8 @@ or
 
 docker-compose -f docker-compose-pro.yml pull image-name
 ```
+
+
+6. Exec tipi-engine
+
+You can modify the cron task for tipi-engine in tipi-infra/engine-cron. Check **Exec tipi-engine > Cron** section in dev environment.
