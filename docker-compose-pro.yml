@@ -34,6 +34,8 @@ services:
       - 8091:8091
     depends_on:
       - mongo
+    volumes:
+      - ./engine-cron:/etc/cron.d/engine-cron
 
   tipi-backend:
     image: politicalwatch/tipi-backend:${BRANCH}
