@@ -86,10 +86,11 @@ docker logs -f CONTAINER_NAME
 
 You can modify the cron task for tipi-engine in tipi-infra/engine-cron
 
-You need to activate crontab task:
+You need to activate crontab task and load env variables for cron:
 
 ```
 docker exec -ti tipi-engine crontab /etc/cron.d/engine-cron
+docker exec -ti tipi-engine bash -c "env >> /etc/environment"
 ```
 
 ### One time
