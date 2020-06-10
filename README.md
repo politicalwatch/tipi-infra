@@ -193,3 +193,11 @@ and then restart (up/down) containers.
 6. Exec tipi-engine
 
 You can modify the cron task for tipi-engine in tipi-infra/engine-cron. Check **Exec tipi-engine > Cron** section in dev environment.
+
+
+7. Clean temp images and volumes
+
+```
+docker rmi $(docker images -f dangling=true -q)
+docker volume prune
+```
