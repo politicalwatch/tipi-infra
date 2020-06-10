@@ -40,41 +40,38 @@ git clone https://github.com/politicalwatch/tipi-infra.git
 
 ## Edit environment vars
 
-You need to:
+* copy tipi-infra/.env.dev to tipi-infra/.env.
+* modify environment variables in tipi-infra/.env to select your
+project paths and prefered ports.
 
-- copy tipi-infra/.env.dev to tipi-infra/.env.
-- modify environment variables in tipi-infra/.env for select your
-project paths and your prefered ports.
+You can also modify specific environment variables on each project. It exists a .env file inside them.
 
-You can modify specific environment variables of each project. Exists a .env
-file inside of each project.
-
-When you finish, you can exec the complete project:
+When you finish configuring them, it is time to exec the complete project:
 
 ```
 # Build images and up containers with projects
+docker-compose build
 docker-compose up -d
 ```
 
-Your project are running by default at:
+Your project are now running by default at:
 
-- Port 8090: Mongo Express
-- Port 5000: Backend
-- Port 5001: Frontend
+- Port 5000: Backend App
+- Port 8080: Frontend App
+- Port 8090: Mongo Express (to manage database)
 
 
-## Check logs about your services
+## Checking logs
 
-There is tow ways to check logs:
+here are two ways to check logs:
 
-1. Logio is used by applications logs and you can found the url executing the next
-command:
+1. Logio is used by applications logs and you can found the url executing the following command:
 
 ```
 docker inspect tipi-log | grep IPAddress
 ```
 
-2. Check each container with docker logs command:
+2. Check log for each container separately:
 
 ```
 docker logs -f CONTAINER_NAME
@@ -82,11 +79,11 @@ docker logs -f CONTAINER_NAME
 
 ## Exec tipi-engine
 
-### Cron
+### Periodically
 
-You can modify the cron task for tipi-engine in tipi-infra/engine-cron
+We use cron to manage periodic tasks. You can modify the cron task for tipi-engine at tipi-infra/engine-cron
 
-You need to activate crontab task and load env variables for cron:
+It is neccesary to activate crontab task and load env variables before running cron jobs:
 
 ```
 docker exec -ti tipi-engine crontab /etc/cron.d/engine-cron
@@ -99,36 +96,34 @@ docker exec -ti tipi-engine bash -c "env >> /etc/environment"
 docker exec -ti tipi-engine python base.py
 ```
 
-## Load data in mongodb
-
-Inside tipi-infra there is an example data for work, you can load it if you want
+## Loading data
 
 ```
-# Copy tipidb folder with data in tipi-mongo docker
+# Copy dump_db folder on tipi-mongo container
 docker cp tipidb tipi-mongo:/tmp
-# Restore data in DB: tipi is the user and pass by default and tipidb the db name
+# Restore database: tipi is the user and pass by default and tipidb the db name
 docker exec -ti tipi-mongo mongoimport -u tipi -p tipi -d tipidb -c topics /tmp/tipidb/topics.json
 ```
 
+Note that inside tipi-infra there is an example data for testing (you can load it if you wish).
 
-# Deploy in production environment
+
+# Deploy on production environment
 
 ## Building docker images:
 
-Currently, images are built automatically when there is a change in the
-repository, but you can build the image manually.
+Currently, images are built automatically when there is a new commit on the repository master branch, but you can also build the image manually.
 
-For example, this are steps for creating and upload one image of backend:
+For example, these are the steps for creating and uploading one backend image:
 
-1. Enter in repository and build docker image
+1. Move to repository folder and build the docker image
 
 ```
 cd tipi-backend
 docker build -t politicalwatch/tipi-backend:latest .
 ```
 
-IMPORTANTE NOTICE: you should change .env.production in case of you are building
-tipi-frontend or parlamento2030
+IMPORTANTE NOTICE: you should change .env.production in case of you are building tipi-frontend module.
 
 2. Login to dockerhub
 
@@ -157,32 +152,29 @@ cp .env.engine.example .env.engine
 cp .env.frontend.example .env.frontend
 ```
 
-3. Modify in these files variables that you need its. Very important the
-   mongo-init.js file, because this file create the database and user, and you
-   should put the same value in this file and .env file
+3. Modify variables on them. Pay attention to mongo-init.js file, because this file will create the database and its user. You should put the same values as .env file.
 
 4. Execute the project:
 
+Firsty, we need to download the images:
+
 ```
 docker-compose -f docker-compose-pro.yml pull
-docker-compose -f docker-compose-pro.yml up -d
 ```
 
-NOTE: for whatever command that you want to use with docker-compose, you need to
-pass the file, for example:
+NOTE: for whatever command that you want to use with docker-compose, you have to indicate the configutation file.
 
-IMPORTANT NOTICE: If you have a proxy, you need to add the command for gunicorn
-in docker-compose-pro.yml, inside tipi-backend:
+IMPORTANT NOTICE: If you have a proxy, you need to add the command for gunicorn in docker-compose-pro.yml, inside tipi-backend:
 
 ```
     command: gunicorn --proxy-allow-from "xx.xx.xx.xx" --access-logfile - tipi_backend.wsgi:app
 ```
 
-At last, up environment:
+Finally, up the environment:
 
 ```
+docker-compose -f docker-compose-pro.yml up -d
 docker-compose -f docker-compose-pro.yml down
-docker-compose -f docker-compose-pro.yml logs -f
 ```
 
 5. Update images:
@@ -194,6 +186,8 @@ or
 
 docker-compose -f docker-compose-pro.yml pull image-name
 ```
+
+and then restart (up/down) containers.
 
 
 6. Exec tipi-engine
