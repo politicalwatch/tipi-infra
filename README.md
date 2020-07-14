@@ -1,4 +1,4 @@
-# Deploy in develop environment
+# Deploy on develop environment
 
 ## Clone repositories
 
@@ -96,7 +96,7 @@ docker exec -ti tipi-engine bash -c "env >> /etc/environment"
 docker exec -ti tipi-engine python base.py
 ```
 
-## Loading data
+## Loading backup data
 
 ```
 # Copy dump_db folder on tipi-mongo container
@@ -106,6 +106,35 @@ docker exec -ti tipi-mongo mongoimport -u tipi -p tipi -d tipidb -c topics /tmp/
 ```
 
 Note that inside tipi-infra there is an example data for testing (you can load it if you wish).
+
+## Refresh knowledge base (also called dictionaries)
+
+When you want to refresh the knowledge base after the modifications of the tags (and their regexs), you have to follow these steps:
+
+* Export knowledge base to JSON format. You can use our [tipi-extract-topics](https://github.com/politicalwatch/tipi-extract-topics#readme) module.
+* Copy topics.json file to tipi-mongo container
+* Refresh Mongo collection with the new knowledge base
+
+```
+docker cp topics.json tipi-mongo:/tmp
+# Change username and password in production
+docker exec -ti tipi-mongo mongoimport -u tipi -p tipi -d tipidb -c topics --drop /tmp/topics.json
+```
+
+
+If you want to re-tag all parliamentary activity with the updated knowledge base, you have to access to MongoDB and then execute:
+
+```
+db.initiatives.updateMany({}, {$set: {tagged: false, topics: [], tags: []}})
+```
+
+After that, execute (outside MongodDB)
+
+```
+docker exec -ti tipi-engine python quickex.py tagger
+```
+
+Note: Remember do not execute these commands on production environment. You have to execute them on develop environment and then export the database and import it on production MongoDB instance.
 
 
 # Deploy on production environment
