@@ -107,7 +107,7 @@ docker exec -ti tipi-mongo mongoimport -u tipi -p tipi -d tipidb -c topics /tmp/
 
 Note that inside tipi-infra there is an example data for testing (you can load it if you wish).
 
-## Refresh knowledge base (also called dictionaries)
+## Refresh knowledge base
 
 When you want to refresh the knowledge base after the modifications of the tags (and their regexs), you have to follow these steps:
 
