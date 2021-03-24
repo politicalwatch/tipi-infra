@@ -10,7 +10,7 @@ services:
       logio: "yes"
 
   mongo:
-    image: mongo:3.4-xenial
+    image: mongo:4.4-bionic
     container_name: ${PROJECT_NAME}-mongo
     restart: unless-stopped
     ports:
@@ -20,13 +20,13 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: tipi
       MONGO_INITDB_DATABASE: tipidb
     volumes:
-      - ./mongo-init.js.example:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./mongo-init.js.example:/docker-entrypoint-initdb.d/mongo-init.js
       - tipi-vol-mongo:/data/db
     labels:
       logio: "yes"
 
   mongo-express:
-    image: mongo-express:0.49
+    image: mongo-express:0.54
     container_name: ${PROJECT_NAME}-mongo-express
     restart: unless-stopped
     ports:
