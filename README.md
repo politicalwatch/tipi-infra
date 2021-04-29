@@ -247,7 +247,7 @@ Copy your New Relic's config file (newrelic.ini into this project (root director
 Ensure it always executes
 
 ```
-NEW_RELIC_CONFIG_FILE=newrelic.ini newrelic-admin run-program
+NEW_RELIC_CONFIG_FILE=/app/newrelic.ini newrelic-admin run-program
 ```
 
 before any other command.
