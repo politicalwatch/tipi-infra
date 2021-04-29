@@ -244,10 +244,16 @@ volumes:
 
 Copy your New Relic's config file (newrelic.ini into this project (root directory)
 
+Copy this line into your .env.backend
+
+```
+NEW_RELIC_CONFIG_FILE=/app/newrelic.ini
+```
+
 Ensure it always executes
 
 ```
-NEW_RELIC_CONFIG_FILE=/app/newrelic.ini newrelic-admin run-program
+newrelic-admin run-program [command]
 ```
 
 before any other command.
