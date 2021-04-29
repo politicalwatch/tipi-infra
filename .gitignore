@@ -5,3 +5,4 @@
 .env.mongo
 .env.frontend
 mongo-init.js
+newrelic.ini

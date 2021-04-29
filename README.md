@@ -185,13 +185,13 @@ cp .env.frontend.example .env.frontend
 
 4. Execute the project:
 
-Firsty, we need to download the images:
+Firstly, we need to download the images:
 
 ```
 docker-compose -f docker-compose-pro.yml pull
 ```
 
-NOTE: for whatever command that you want to use with docker-compose, you have to indicate the configutation file.
+NOTE: for whatever command that you want to use with docker-compose, you have to indicate into the configuration file.
 
 IMPORTANT NOTICE: If you have a proxy, you need to add the command for gunicorn in docker-compose-pro.yml, inside tipi-backend:
 
@@ -230,3 +230,24 @@ You can modify the cron task for tipi-engine in tipi-infra/engine-cron. Check **
 docker rmi $(docker images -f dangling=true -q)
 docker volume prune
 ```
+
+8. Using New Relic (performance monitoring tool)
+
+If you want to use New Relic, follow these steps:
+
+Add this line to into docker-compose-pro.yml (section tipi-backend)
+
+```
+volumes:
+  - ./newrelic.ini:/app/newrelic.ini
+```
+
+Copy your New Relic's config file (newrelic.ini into this project (root directory)
+
+Ensure it always executes
+
+```
+NEW_RELIC_CONFIG_FILE=newrelic.ini newrelic-admin run-program
+```
+
+before any other command.
