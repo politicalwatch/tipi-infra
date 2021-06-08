@@ -4,6 +4,7 @@ services:
   redis:
     image: redis:6.0-rc
     container_name: ${PROJECT_NAME}-redis
+    restart: unless-stopped
     ports:
       - 6379
 
