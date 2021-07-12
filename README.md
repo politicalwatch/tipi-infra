@@ -77,25 +77,6 @@ docker inspect tipi-log | grep IPAddress
 docker logs -f CONTAINER_NAME
 ```
 
-## Exec tipi-engine
-
-### Periodically
-
-We use cron to manage periodic tasks. You can modify the cron task for tipi-engine at tipi-infra/engine-cron
-
-It is neccesary to activate crontab task and load env variables before running cron jobs:
-
-```
-docker exec -ti tipi-engine crontab /etc/cron.d/engine-cron
-docker exec -ti tipi-engine bash -c "env >> /etc/environment"
-```
-
-### One time
-
-```
-docker exec -ti tipi-engine python base.py
-```
-
 ## Loading backup data
 
 ```
@@ -219,19 +200,14 @@ docker-compose -f docker-compose-pro.yml pull image-name
 and then restart (up/down) containers.
 
 
-6. Exec tipi-engine
-
-You can modify the cron task for tipi-engine in tipi-infra/engine-cron. Check **Exec tipi-engine > Cron** section in dev environment.
-
-
-7. Clean temp images and volumes
+6. Clean temp images and volumes
 
 ```
 docker rmi $(docker images -f dangling=true -q)
 docker volume prune
 ```
 
-8. Using New Relic (performance monitoring tool)
+7. Using New Relic (performance monitoring tool)
 
 If you want to use New Relic, follow these steps:
 

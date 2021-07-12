@@ -46,7 +46,6 @@ services:
     env_file:
       - ${ENGINE_PATH}/.env
     volumes:
-      - ./engine-cron:/etc/cron.d/engine-cron
       - ${ENGINE_PATH}:/app
     depends_on:
       - mongo
