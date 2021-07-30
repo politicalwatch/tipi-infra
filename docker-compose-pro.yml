@@ -9,7 +9,7 @@ services:
       - 6379
 
   mongo:
-    image: mongo:3.4-xenial
+    image: mongo:4.4-bionic
     container_name: ${PROJECT_NAME}-mongo
     restart: unless-stopped
     ports:
