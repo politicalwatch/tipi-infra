@@ -1,6 +1,5 @@
 version: "3.3"
 services:
-
   redis:
     image: redis:6.0-rc
     container_name: ${PROJECT_NAME}-redis
@@ -81,9 +80,9 @@ services:
     volumes:
       - ${FRONTEND_PATH}:/app
       - /app/node_modules
-    command: yarn serve
+    command: npm run dev -- --host
     ports:
-      - ${FRONTEND_PORT}:8080
+      - ${FRONTEND_PORT}:5173
     depends_on:
       - tipi-backend
     labels:

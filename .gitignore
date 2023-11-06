@@ -6,3 +6,4 @@
 .env.frontend
 mongo-init.js
 newrelic.ini
+.DS_Store
