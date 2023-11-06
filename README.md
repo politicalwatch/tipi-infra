@@ -23,7 +23,7 @@ git clone https://github.com/politicalwatch/tipi-tasks.git
 * tipi-frontend:
 
 ```
-git clone https://github.com/politicalwatch/tipi-frontend.git
+git clone https://github.com/politicalwatch/quehacenlosdiputados.es.git
 ```
 
 or
