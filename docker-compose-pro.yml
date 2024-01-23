@@ -12,8 +12,6 @@ services:
     image: mongo:4.4-bionic
     container_name: ${PROJECT_NAME}-mongo
     restart: unless-stopped
-    ports:
-      - 27017
     env_file:
       - .env.mongo
     environment:
