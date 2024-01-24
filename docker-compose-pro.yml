@@ -1,8 +1,7 @@
 version: "3.3"
 services:
-
   redis:
-    image: redis:6.0-rc
+    image: redis:6.2
     container_name: ${PROJECT_NAME}-redis
     restart: unless-stopped
     ports:
