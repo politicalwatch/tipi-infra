@@ -9,7 +9,7 @@ services:
       logio: "yes"
 
   mongo:
-    image: mongo:4.4-bionic
+    image: mongo:4.4-focal
     container_name: ${PROJECT_NAME}-mongo
     restart: unless-stopped
     ports:
