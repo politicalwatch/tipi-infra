@@ -72,24 +72,24 @@ services:
     labels:
       logio: "yes"
 
-  # tipi-frontend:
-  #   build:
-  #     context: ${FRONTEND_PATH}
-  #     dockerfile: Dockerfile-dev
-  #   container_name: ${PROJECT_NAME}-frontend
-  #   restart: unless-stopped
-  #   env_file:
-  #     - ${FRONTEND_PATH}/.env
-  #   volumes:
-  #     - ${FRONTEND_PATH}:/app
-  #     - /app/node_modules
-  #   command: npm run dev -- --host
-  #   ports:
-  #     - ${FRONTEND_PORT}:5173
-  #   depends_on:
-  #     - tipi-backend
-  #   labels:
-  #     logio: "yes"
+  tipi-frontend:
+    build:
+      context: ${FRONTEND_PATH}
+      dockerfile: Dockerfile-dev
+    container_name: ${PROJECT_NAME}-frontend
+    restart: unless-stopped
+    env_file:
+      - ${FRONTEND_PATH}/.env
+    volumes:
+      - ${FRONTEND_PATH}:/app
+      - /app/node_modules
+    command: npm run dev -- --host
+    ports:
+      - ${FRONTEND_PORT}:5173
+    depends_on:
+      - tipi-backend
+    labels:
+      logio: "yes"
 
   tipi-tasks:
     build:
