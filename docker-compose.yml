@@ -1,12 +1,9 @@
-version: "3.3"
 services:
   redis:
     image: redis:7.4
     container_name: ${PROJECT_NAME}-redis
     ports:
       - 6379
-    labels:
-      logio: "yes"
 
   mongo:
     image: mongo:7.0-jammy
@@ -21,8 +18,6 @@ services:
     volumes:
       - ./mongo-init.js.example:/docker-entrypoint-initdb.d/mongo-init.js
       - tipi-vol-mongo:/data/db
-    labels:
-      logio: "yes"
 
   mongo-express:
     image: mongo-express:latest
@@ -36,8 +31,6 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: tipi
       ME_CONFIG_BASICAUTH_USERNAME: tipi
       ME_CONFIG_BASICAUTH_PASSWORD: tipi
-    labels:
-      logio: "yes"
 
   tipi-engine:
     build:
@@ -51,8 +44,6 @@ services:
       - ${ENGINE_PATH}:/app
     depends_on:
       - mongo
-    labels:
-      logio: "yes"
 
   tipi-backend:
     build:
@@ -69,8 +60,6 @@ services:
     depends_on:
       - mongo
     command: gunicorn --bind 0.0.0.0:5000 --access-logfile - tipi_backend.wsgi:app --reload
-    labels:
-      logio: "yes"
 
   tipi-frontend:
     build:
@@ -88,8 +77,6 @@ services:
       - ${FRONTEND_PORT}:5173
     depends_on:
       - tipi-backend
-    labels:
-      logio: "yes"
 
   tipi-tasks:
     build:
@@ -105,20 +92,6 @@ services:
       - redis
       - mongo
     user: "1000:1000"
-    labels:
-      logio: "yes"
-
-  log:
-    container_name: ${PROJECT_NAME}-log
-    image: geniousphp/logio
-    privileged: true
-    restart: unless-stopped
-    environment:
-      PORT: 80
-      DOCKER_SOCKET: "/var/run/docker.sock"
-      SHOW_LOG_BY_LABEL: "logio"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   tipi-vol-mongo:
